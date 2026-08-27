@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#24152e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>The Ultimate Olivia Rodrigo Mission</title>
+<style>
+:root {
+  --ink:#25172f; --purple:#8f4bb8; --pink:#f49ac2; --lav:#eee1ff;
+  --cream:#fff9fd; --green:#2d8c6f;
+}
+* { box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+html,body { margin:0; min-height:100%; }
+body {
+  font-family:-apple-system,BlinkMacSystemFont,"Avenir Next","Segoe UI",Arial,sans-serif;
+  color:var(--ink); background:
+    radial-gradient(circle at 15% 10%, #ffffff 0 7%, transparent 20%),
+    radial-gradient(circle at 90% 20%, #f4c4dd 0 5%, transparent 23%),
+    linear-gradient(145deg,#e9d7ff 0%,#ffd9e8 52%,#d9e8ff 100%);
+  min-height:100vh; padding:env(safe-area-inset-top) 14px env(safe-area-inset-bottom);
+}
+.wrap { width:min(720px,100%); margin:0 auto; padding:18px 0 28px; }
+.card {
+  background:rgba(255,255,255,.94); border:1px solid rgba(255,255,255,.8);
+  border-radius:28px; padding:24px 18px; box-shadow:0 18px 55px rgba(49,20,65,.18);
+  overflow:hidden; position:relative;
+}
+.confetti { position:absolute; inset:0; pointer-events:none; overflow:hidden; opacity:.8; }
+.confetti span { position:absolute; font-size:18px; animation:float 5s ease-in-out infinite; }
+@keyframes float { 0%,100%{transform:translateY(0) rotate(0)} 50%{transform:translateY(-12px) rotate(12deg)} }
+.hero { text-align:center; position:relative; }
+.badge {
+  display:inline-block; padding:7px 12px; border-radius:999px; background:#24152e; color:white;
+  font-size:12px; font-weight:800; letter-spacing:1.2px;
+}
+h1 { font-size:clamp(30px,8vw,46px); line-height:1.02; margin:14px 0 8px; }
+h2 { font-size:clamp(27px,7vw,38px); line-height:1.08; margin:8px 0 14px; }
+.subtitle { font-size:18px; line-height:1.45; margin:8px 0 22px; }
+.bigemoji { font-size:42px; margin:8px 0; }
+button {
+  width:100%; min-height:58px; border:0; border-radius:18px; margin:8px 0;
+  padding:15px 16px; background:var(--lav); color:var(--ink); font-size:17px;
+  font-weight:750; cursor:pointer; box-shadow:0 3px 0 rgba(72,35,94,.08);
+  touch-action:manipulation;
+}
+button:active { transform:scale(.985); }
+.primary { background:#24152e; color:white; font-size:19px; }
+.option { text-align:left; }
+.option.correct { background:#d9f2e9; outline:3px solid #64b996; }
+.option.wrong { background:#ffe1e9; outline:3px solid #e894a8; }
+button:disabled { opacity:1; }
+.progress { height:9px; background:#eee7f1; border-radius:99px; overflow:hidden; margin:16px 0 22px; }
+.bar { height:100%; width:0; background:linear-gradient(90deg,#8f4bb8,#f49ac2); transition:width .35s; }
+.count { font-size:13px; font-weight:800; letter-spacing:.8px; }
+.feedback { min-height:48px; font-size:16px; line-height:1.4; margin:8px 0; font-weight:700; }
+.hidden { display:none !important; }
+.ticket {
+  margin:20px 0; padding:22px 16px; border:3px dashed var(--purple); border-radius:22px;
+  background:linear-gradient(135deg,#fff5fc,#f0e7ff); position:relative;
+}
+.ticket:before,.ticket:after {
+  content:""; position:absolute; width:22px; height:22px; background:white; border-radius:50%; top:50%;
+}
+.ticket:before { left:-13px; } .ticket:after { right:-13px; }
+.date { font-size:23px; font-weight:900; margin:8px 0; }
+.note { font-size:16px; line-height:1.5; }
+.footer { text-align:center; font-size:12px; opacity:.55; margin-top:18px; }
+.pop { animation:pop .55s ease; }
+@keyframes pop { 0%{transform:scale(.85);opacity:0} 70%{transform:scale(1.04)} 100%{transform:scale(1);opacity:1} }
+@media (min-width:600px) {
+  .card { padding:38px; }
+  button { min-height:62px; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <main class="card">
+    <div class="confetti">
+      <span style="left:7%;top:13%">✦</span><span style="left:89%;top:10%">♡</span>
+      <span style="left:4%;top:70%">✧</span><span style="right:8%;top:76%">✦</span>
+    </div>
+
+    <section id="intro" class="hero">
+      <div class="bigemoji">✨ 🎤 💜 🎤 ✨</div>
+      <span class="badge">TOP SECRET • CLASSIFIED MISSION</span>
+      <h1>The Ultimate<br>Olivia Rodrigo Mission</h1>
+      <p class="subtitle"><b>[NIECE'S NAME]</b>, you've been selected for a very important mission.</p>
+      <p class="subtitle">Complete <b>5 challenges</b> to unlock your surprise.</p>
+      <p class="subtitle">⚠️ Warning: The final prize may cause screaming.</p>
+      <button class="primary" onclick="start()">START MISSION 🚀</button>
+    </section>
+
+    <section id="quiz" class="hidden">
+      <div class="count" id="count"></div>
+      <div class="progress"><div class="bar" id="bar"></div></div>
+      <div class="question" id="question"></div>
+      <div id="options"></div>
+      <div class="feedback" id="feedback"></div>
+    </section>
+
+    <section id="end" class="hidden hero">
+      <div class="bigemoji pop">🎉 💜 🎤 💜 🎉</div>
+      <span class="badge">MISSION ACCOMPLISHED</span>
+      <h2>YOU'RE GOING TO SEE<br>OLIVIA RODRIGO LIVE!</h2>
+      <div class="ticket pop">
+        <div style="font-weight:900;letter-spacing:1px">CONCERT CREW</div>
+        <div class="date">Saturday, October 3</div>
+        <p style="font-size:22px;margin:10px 0">🎤 • 🎶 • 💜</p>
+        <p class="note"><b>Mom + Aunt Alison + YOU</b></p>
+        <p class="note">Your mission now: pick an amazing outfit, learn the songs, and prepare your best screaming voice!</p>
+      </div>
+      <p class="note"><b>📸 Take a screenshot of this screen and send it to Mom & Aunt Alison!</b></p>
+      <button class="primary" onclick="restart()">PLAY AGAIN 🔄</button>
+    </section>
+
+    <div class="footer">CLASSIFIED • OLIVIA RODRIGO MISSION • CLASSIFIED</div>
+  </main>
+</div>
+
+<script>
+const questions = [{"q": "Olivia Rodrigo starred as Nini in which Disney+ series?", "options": ["High School Musical: The Musical: The Series", "Hannah Montana", "Wizards of Waverly Place", "Andi Mack"], "answer": 0, "correct": "YES! \ud83c\udfac Olivia played Nini Salazar.", "wrong": "Not quite! Here's your clue: think Disney+ and a musical high school."}, {"q": "Which Olivia Rodrigo album includes \u201cgood 4 u\u201d and \u201cdeja vu\u201d?", "options": ["GUTS", "SOUR", "Midnight", "drivers license"], "answer": 1, "correct": "CORRECT! \ud83d\udc9c SOUR is Olivia's debut album.", "wrong": "Almost! Think of Olivia's first full-length album."}, {"q": "What absolutely belongs on your concert-prep checklist?", "options": ["A library card", "A telescope", "Your best screaming voice", "A fishing rod"], "answer": 2, "correct": "OBVIOUSLY! \ud83c\udfa4 You need those concert vocals!", "wrong": "Nope! Think about what you'll need when your favorite song starts."}, {"q": "Olivia Rodrigo often combines pop music with which other musical style?", "options": ["Rock", "Classical opera", "Bluegrass", "Marching band music"], "answer": 0, "correct": "YES! \ud83c\udfb8 Rock and pop-rock influences are a big part of her sound.", "wrong": "Not this time! Think guitars, energy and pop-rock."}, {"q": "FINAL MISSION: What is your prize for completing this mission?", "options": ["A lifetime supply of broccoli", "A new pair of socks", "An Olivia Rodrigo concert with Mom and Aunt Alison", "Homework for the rest of the year"], "answer": 2, "correct": "MISSION ACCOMPLISHED! \ud83c\udf89", "wrong": "You are SO close. Pick the prize that would make you scream!"}];
+let current = 0, score = 0;
+
+function start() {
+  current = 0; score = 0;
+  document.getElementById('intro').classList.add('hidden');
+  document.getElementById('end').classList.add('hidden');
+  document.getElementById('quiz').classList.remove('hidden');
+  showQuestion();
+}
+function showQuestion() {
+  const item = questions[current];
+  document.getElementById('count').textContent = `CHALLENGE ${current+1} OF ${questions.length}`;
+  document.getElementById('bar').style.width = `${(current/questions.length)*100}%`;
+  const q = document.getElementById('question');
+  q.textContent = item.q;
+  q.style.fontSize = "clamp(23px,6vw,30px)";
+  q.style.fontWeight = "800";
+  q.style.lineHeight = "1.25";
+  q.style.margin = "12px 0 18px";
+  document.getElementById('feedback').textContent = "";
+  const box = document.getElementById('options');
+  box.innerHTML = "";
+  item.options.forEach((option,i) => {
+    const b = document.createElement('button');
+    b.className = "option";
+    b.textContent = option;
+    b.onclick = () => choose(i,b);
+    box.appendChild(b);
+  });
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function choose(i, clicked) {
+  const item = questions[current];
+  document.querySelectorAll('.option').forEach(b => b.disabled = true);
+  if(i === item.answer) {
+    score++;
+    clicked.classList.add('correct');
+    document.getElementById('feedback').textContent = "✓ " + item.correct;
+  } else {
+    clicked.classList.add('wrong');
+    document.querySelectorAll('.option')[item.answer].classList.add('correct');
+    document.getElementById('feedback').textContent = "💡 " + item.wrong;
+  }
+  setTimeout(() => {
+    current++;
+    if(current < questions.length) showQuestion();
+    else finish();
+  }, 1500);
+}
+function finish() {
+  document.getElementById('bar').style.width = "100%";
+  document.getElementById('quiz').classList.add('hidden');
+  document.getElementById('end').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+function restart() {
+  document.getElementById('end').classList.add('hidden');
+  document.getElementById('intro').classList.remove('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+</script>
+</body>
+</html>
